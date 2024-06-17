@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Level 1",
+        "location": {
+            "name": "Utö, Sweden",
+            "latitude": 58.961,
+            "longitude": 18.342
+        },
+        "description": "Clastic sedimentary rocks",
+        "intro_text": "Introductory text about clastic sedimentary rocks.",
+        "questions": [
+            {
+                "question_text": "Identify bedding, foliation, and the axial plane of the fold.",
+                "question_type": "image-label",
+                "image_url": "/static/images/fold.jpg",
+                "labels": [
+                    "bedding",
+                    "foliation",
+                    "axial plane"
+                ],
+                "locations": {
+                    "bedding": {"x": 0.5, "y": 0.5},
+                    "foliation": {"x": 0.3, "y": 0.3},
+                    "axial plane": {"x": 0.7, "y": 0.7}
+                }
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Level 2",
+        "location": {
+            "name": "Utö, Sweden",
+            "latitude": 58.961,
+            "longitude": 18.342
+        },
+        "description": "Pyroclastic sedimentary rocks",
+        "intro_text": "Introductory text about pyroclastic sedimentary rocks.",
+        "questions": []
+    }
+]
