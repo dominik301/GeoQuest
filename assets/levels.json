@@ -4,8 +4,8 @@
         "name": "Level 1",
         "location": {
             "name": "Utö, Sweden",
-            "latitude": 58.961,
-            "longitude": 18.342
+            "latitude": 58.960442,
+            "longitude": 18.343853
         },
         "description": "Clastic sedimentary rocks",
         "intro_text": "Introductory text about clastic sedimentary rocks.",
@@ -13,7 +13,7 @@
             {
                 "question_text": "Identify bedding, foliation, and the axial plane of the fold.",
                 "question_type": "image-label",
-                "image_url": "/static/images/fold.jpg",
+                "image_url": "fold",
                 "labels": [
                     "bedding",
                     "foliation",
@@ -32,11 +32,23 @@
         "name": "Level 2",
         "location": {
             "name": "Utö, Sweden",
-            "latitude": 58.961,
-            "longitude": 18.342
+            "latitude": 58.963933,
+            "longitude": 18.352761
         },
         "description": "Pyroclastic sedimentary rocks",
         "intro_text": "Introductory text about pyroclastic sedimentary rocks.",
-        "questions": []
+        "questions": [
+            {
+                "question_text": "Is the composition of the rock rhyolitic, andesitic or basalt?",
+                "question_type": "multiple-choice",
+                "options": [
+                    "rhyolitic",
+                    "andesitic",
+                    "basalt"
+                ],
+                "correct_answer": "rhyolitic",
+                "hint": "Silica content of dark layers: 70%, silica content of light layers: 75%"
+            }
+        ]
     }
 ]

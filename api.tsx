@@ -19,9 +19,19 @@ export const sendRequest = (queryString: string) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(levelsData);
-      }, 1000); // Optional delay to simulate async behavior
+      }, 500); // Optional delay to simulate async behavior
     });
-  } else {
+  } else if (queryString.startsWith('level/')) {
+    // Return a resolved promise with the local JSON data
+    const id = queryString.split('/')[1];
+    const level = levelsData.find((level: { id: number }) => level.id === Number(id));
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(level);
+      }, 500); // Optional delay to simulate async behavior
+    });
+  }  
+  else {
     // Construct the URL for remote fetching
     const url = `${BASE_URL}/${queryString}`;
     console.log(url);

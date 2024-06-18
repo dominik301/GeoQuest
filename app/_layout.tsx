@@ -31,7 +31,7 @@ export default function RootLayout() {
       <Stack>
         {/*<Stack.Screen name="index" />
         <Stack.Screen name="map" />*/}
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false, title: "Home" }} />
         {/*<Stack.Screen name="level" />
         <Stack.Screen name="exercise" />*/}
       </Stack>

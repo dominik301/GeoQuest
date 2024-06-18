@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 
 import {sendRequest} from '../../api'
 import { router } from 'expo-router';
 
-import MovieRow from '../../screens/Search/MovieRow'
+import LevelRow from '../../screens/Search/MovieRow'
 
-const renderItem = onSelect => ({item}) => <MovieRow onSelect={onSelect} {...item} />
+const renderItem = onSelect => ({item}) => <LevelRow onSelect={onSelect} {...item} />
 const getKey = ({id}) => id
 
 export default function Search() {
@@ -15,7 +15,6 @@ export default function Search() {
   useEffect(() => {
     sendRequest('levels')
       .then(result => {
-        console.log(result)
         setResults(result)
       })
       .catch((err) => {
@@ -24,22 +23,23 @@ export default function Search() {
       })
   }, [])
 
-  function handleMovieSelect (id) {
+  function handleLevelSelect (id) {
     router.navigate(`level/${id}`)
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container,
+      Platform.OS === 'android' ? { paddingTop: StatusBar.currentHeight } : null]}>
       {results
         ? (
           <FlatList
             data={results}
-            renderItem={renderItem(handleMovieSelect)}
+            renderItem={renderItem(handleLevelSelect)}
             keyExtractor={getKey}
           />
         ) : <Text>No results</Text>
       }
-    </View>
+    </SafeAreaView>
   );
 }
 

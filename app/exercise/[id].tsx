@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import { View, SafeAreaView, Text, Button, StyleSheet, useColorScheme } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 
 import ImageLabelAssignment from '../../components/ImageLabelAssignment';
 
 import {sendRequest} from '../../api'
 
-const BASE_URL = ' http://192.168.188.26:5000'
+import MultipleChoiceQuiz from '../../components/MultipleChoiceAssignment';
+
+const BASE_URL = ' http://192.168.188.26:3000'
 
 interface IQuestion {
     question_text: string;
@@ -18,6 +21,21 @@ export default function Exercise() {
     const { id } = useLocalSearchParams();
     const [ completed, setCompleted ] = useState<Boolean>(false);
     const [questions, setQuestions] = useState<IQuestion[]|null>(null);
+    const navigation = useNavigation();
+
+    const colorScheme = useColorScheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
+      alignItems: 'center',
+    },
+    text: {
+      color: colorScheme === 'dark' ? 'white' : 'black',
+    },
+  });
+
     useEffect(() => {
         sendRequest(`level/${id}`)
           .then(result => {
@@ -26,29 +44,34 @@ export default function Exercise() {
           .catch(() => setQuestions(null))
       }, [id])
 
+      useEffect(() => {
+        if (id) {
+          navigation.setOptions({ title: `Exercise ${id}` });
+        }
+      }, [id, navigation]);
+
       if (!id) return <Text>There was an error</Text>
     return ( questions ? (
-        <View>
-            <Text>Exercise {id}</Text>
+        <SafeAreaView style={styles.container}>
             {questions.map((question: IQuestion, index: number) => (
-                <View key={index}>
-                    <Text>{question.question_text}</Text>
+                <View style={{flex: 1}} key={index}>
+                    <Text style={styles.text}>{question.question_text}</Text>
                     {question.question_type === "image-label" && (
-                        <View>
-                        {/*<Image source={{uri: `${BASE_URL}${question.image_url}`}}
-                        style={{width: 200, height: 200}} />*/}
-                        <ImageLabelAssignment imageUrl={`${BASE_URL}${question.image_url}`} question={question}/>
-                        </View>
+                        <ImageLabelAssignment imageUrl={`${question.image_url}`} question={question} onSolved={setCompleted}/>
                     )}
-                    <Button title="Check answers" onPress={() => setCompleted(true)} />
+                    {question.question_type === "multiple-choice" && (
+                        <MultipleChoiceQuiz question={question} onSolved={setCompleted} />
+                    )}
                 </View>
             ))}
             
             {completed ? (
-                <Link href="/success">Continue</Link>
+                <Link href="/success" asChild>
+                    <Button title="Continue" />
+                </Link>
             ) : null
         }
-        </View>
+        </SafeAreaView>
     ) : <Text>Loading...</Text>
     );
 }
